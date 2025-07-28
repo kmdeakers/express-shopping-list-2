@@ -37,6 +37,10 @@ class Item {
     }
     /** Remove item from list */
     static remove(name) {
+        let itemIndex = db.items.findIndex(v => v.name === name);
 
+        db.items.splice(itemIndex, 1);
     }
 }
+
+module.exports = Item
