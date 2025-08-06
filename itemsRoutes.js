@@ -14,7 +14,7 @@ const Item = require("./item")
  *      ]}
 */
 router.get("/", function(req, res) {
-    return res.json(db.items)
+    return res.json({ items: Item.findAll() });
 })
 
 
