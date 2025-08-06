@@ -38,7 +38,7 @@ router.post("/", function(req, res) {
     const itemName =  req.params.name;
     const item = Item.find(itemName);
 
-    return res.json({item});
+    return res.json(item);
  })
 
 
