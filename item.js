@@ -22,8 +22,7 @@ class Item {
     static updateList(name, data) {
         let foundItem = Item.find(name);
 
-        foundItem.name = data.name;
-        foundItem.price = data.price;
+        Object.assign(foundItem, data);
 
         return foundItem;
     }
@@ -31,7 +30,7 @@ class Item {
     /** Find item by name */
     static find(name) {
         const foundItem = db.items.find(v => v.name === name);
-        if (foundItem === undefined) throw new BadRequestError();
+        if (foundItem === undefined) throw new NotFoundError();
         
         return foundItem;
     }

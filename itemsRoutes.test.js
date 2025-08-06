@@ -26,6 +26,11 @@ describe("GET /items/:name", function() {
     test("Gets an item by name", async function () {
         const response = await request(app).get(`/items/${testItem.name}`);
         expect(response.body).toEqual(testItem);
+    });
+
+    test("Responds with 404 if can't find item", async function () {
+        const response = await request(app).get("/items/rocks");
+        expect(response.statusCode).toEqual(404);
     })
 })
 
@@ -37,5 +42,22 @@ describe("POST /items", function () {
             .post('/items')
             .send(newItem);
         expect(response.body).toEqual({ added: newItem });
+    });
+});
+
+describe("PATCH /items/:name", function () {
+    test("Updates item by name", async function () {
+        const resp = await request(app)
+            .patch(`/items/${testItem.name}`)
+            .send({price: 1.76});
+        expect(resp.body).toEqual({updated: {name: testItem.name, price: 1.76}});
+    });
+});
+
+describe("DELETE /items/:name", function() {
+    test("Deletes item by name", async function () {
+        const resp = await request(app)
+            .delete(`/items/:${testItem.name}`);
+        expect(resp.body).toEqual({message: "Deleted"});
     });
 });
