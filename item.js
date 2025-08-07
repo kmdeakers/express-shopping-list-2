@@ -21,6 +21,7 @@ class Item {
     /** Update items list */
     static updateList(name, data) {
         let foundItem = Item.find(name);
+        if (foundItem === undefined) throw new NotFoundError();
 
         Object.assign(foundItem, data);
 
@@ -37,6 +38,7 @@ class Item {
     /** Remove item from list */
     static remove(name) {
         let itemIndex = db.items.findIndex(v => v.name === name);
+        if (itemIndex === -1) throw new NotFoundError();
 
         db.items.splice(itemIndex, 1);
     }

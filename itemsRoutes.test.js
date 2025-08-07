@@ -43,6 +43,13 @@ describe("POST /items", function () {
             .send(newItem);
         expect(response.body).toEqual({ added: newItem });
     });
+
+    test("Responds with 400 if body is empty", async function () {
+        const response = await request(app)
+            .post(`/items`)
+            .send();
+        expect(response.statusCode).toEqual(400);
+    })
 });
 
 describe("PATCH /items/:name", function () {
@@ -52,12 +59,19 @@ describe("PATCH /items/:name", function () {
             .send({price: 1.76});
         expect(resp.body).toEqual({updated: {name: testItem.name, price: 1.76}});
     });
+
+    test("Responds with 400 if body is empty", async function () {
+        const response = await request(app)
+            .patch(`/items/${testItem.name}`)
+            .send();
+        expect(response.statusCode).toEqual(400);
+    })
 });
 
 describe("DELETE /items/:name", function() {
     test("Deletes item by name", async function () {
         const resp = await request(app)
-            .delete(`/items/:${testItem.name}`);
+            .delete(`/items/${testItem.name}`);
         expect(resp.body).toEqual({message: "Deleted"});
     });
 });
